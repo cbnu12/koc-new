@@ -1,12 +1,13 @@
 package com.koc.place.domain;
 
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.List;
+
 
 @Getter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 public class Place {
     private final Long id;
 
@@ -14,7 +15,7 @@ public class Place {
     private final String contact;
     private final String url;
     private final String description;
-    private final String[] category;
+    private final List<String> category;
 
     private final Address address;
 }

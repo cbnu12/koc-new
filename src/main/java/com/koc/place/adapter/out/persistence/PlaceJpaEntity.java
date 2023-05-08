@@ -1,5 +1,6 @@
 package com.koc.place.adapter.out.persistence;
 
+import com.koc.place.domain.Place;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -44,4 +45,16 @@ class PlaceJpaEntity {
     String updatedBy;
     @LastModifiedDate
     LocalDateTime updatedAt;
+
+    Place toPlace() {
+        return new Place(
+                this.id,
+                this.name,
+                this.contact,
+                this.url,
+                this.description,
+                this.category,
+                this.address.toAddress()
+        );
+    }
 }

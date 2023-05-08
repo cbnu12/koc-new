@@ -17,8 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -36,6 +36,33 @@ class ApiApplicationTests {
 
     @Test
     void register() throws Exception {
+        ResultActions resultActions = registerPlace();
+        resultActions.andExpect(status().isOk())
+                .andExpect(content().string("1"));
+    }
+
+
+    @Test
+    void search() throws Exception {
+        registerPlace();
+
+        ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.get("/place")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .queryParam("page", "0")
+                        .queryParam("size", "10")
+        );
+
+        resultActions.andExpect(status().isOk())
+                .andExpect(jsonPath("$.page", is(0)))
+                .andExpect(jsonPath("$.size", is(10)))
+                .andExpect(jsonPath("$.total", is(1)))
+                .andExpect(jsonPath("$.items[0].name", is("이디야커피 구일역점")));
+
+    }
+
+    private ResultActions registerPlace() throws Exception {
         RegisterCommand command = new RegisterCommand(
                 "이디야커피 구일역점",
                 "02-868-1816",
@@ -50,15 +77,11 @@ class ApiApplicationTests {
                 241.0D
         );
 
-        ResultActions resultActions = mockMvc.perform(
+        return mockMvc.perform(
                 MockMvcRequestBuilders.post("/place")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .content(registerCommandToJsonString(command))
         );
-
-        resultActions.andExpect(status().isOk())
-                .andExpect(content().string("1"));
     }
-
 }
