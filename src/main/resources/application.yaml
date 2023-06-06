@@ -1,9 +1,18 @@
 spring:
   datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/koc
     username: root
     password: koc
-    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: create
+
+---
+spring:
+  config.activate.on-profile: prd
+  jpa.show-sql: false
+  datasource:
+    url: jdbc:mysql://koc-db:3306/koc
+    username: root
+    password: koc
