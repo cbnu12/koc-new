@@ -33,7 +33,7 @@ class PlacePersistenceAdapterTests {
                 123.0D,
                 241.0D
         );
-        Long id = adapter.execute(command);
+        Long id = adapter.register(command);
         Assertions.assertThat(id).isEqualTo(1L);
     }
 }

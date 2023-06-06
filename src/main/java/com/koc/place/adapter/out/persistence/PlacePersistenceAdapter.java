@@ -17,13 +17,13 @@ class PlacePersistenceAdapter implements RegisterPort, SearchPort {
     private final PlaceJpaRepository repository;
 
     @Override
-    public Long execute(RegisterCommand command) {
+    public Long register(RegisterCommand command) {
         PlaceJpaEntity inserted = repository.save(commandToEntity(command));
         return inserted.getId();
     }
 
     @Override
-    public Page<Place> execute(SearchQuery query) {
+    public Page<Place> search(SearchQuery query) {
         Pageable pageable = PageRequest.of(query.getPage(), query.getSize());
         Page<PlaceJpaEntity> entities = repository.findAll(pageable);
         return entities.map(PlaceJpaEntity::toPlace);

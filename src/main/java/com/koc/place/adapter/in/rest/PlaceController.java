@@ -11,22 +11,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@org.springframework.web.bind.annotation.RestController
 @RequiredArgsConstructor
-class RegisterController {
+class PlaceController {
     private final RegisterUseCase registerUseCase;
     private final SearchUseCase searchUseCase;
 
     @GetMapping("/place")
     public SearchPageResponse search(@Valid final SearchQuery query) {
-        Page<Place> places = searchUseCase.execute(query);
+        Page<Place> places = searchUseCase.search(query);
         return SearchPageResponse.from(places);
     }
 
     @PostMapping("/place")
     public Long register(@RequestBody @Valid final RegisterCommand command) {
-        return registerUseCase.execute(command);
+        return registerUseCase.register(command);
     }
 }

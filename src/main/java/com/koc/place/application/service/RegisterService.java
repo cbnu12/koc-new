@@ -14,7 +14,7 @@ public class RegisterService implements RegisterUseCase {
 
     @Override
     @Transactional
-    public Long execute(RegisterCommand command) {
-        return registerPort.execute(command);
+    public Long register(RegisterCommand command) {
+        return registerPort.register(command);
     }
 }

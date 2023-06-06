@@ -14,7 +14,7 @@ public class SearchService implements SearchUseCase {
     private final SearchPort searchPort;
 
     @Override
-    public Page<Place> execute(SearchQuery query) {
-        return searchPort.execute(query);
+    public Page<Place> search(SearchQuery query) {
+        return searchPort.search(query);
     }
 }
