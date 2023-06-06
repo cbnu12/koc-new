@@ -10,8 +10,21 @@ pipeline {
 
         stage('Gradle Build') {
             steps {
-                echo 'Gradle Build'
-                sh "./gradlew clean bootJar"
+                sh './gradlew clean bootJar'
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                sh 'sudo docker build -t koc:latest .'
+            }
+        }
+
+        stage('Docker Run') {
+            steps {
+                sh 'sudo docker stop koc || true'
+                sh 'sudo docker rm koc || true'
+                sh 'sudo docker run --name koc --network koc-network -dit -p 8100:8080 koc:latest'
             }
         }
     }
