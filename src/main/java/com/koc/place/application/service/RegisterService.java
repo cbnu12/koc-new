@@ -1,8 +1,8 @@
 package com.koc.place.application.service;
 
-import com.koc.place.application.port.in.RegisterCommand;
 import com.koc.place.application.port.in.RegisterUseCase;
 import com.koc.place.application.port.out.RegisterPort;
+import com.koc.place.domain.Place;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,9 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class RegisterService implements RegisterUseCase {
     private final RegisterPort registerPort;
 
-    @Override
     @Transactional
-    public Long register(RegisterCommand command) {
-        return registerPort.register(command);
+    public Long register(Place place) {
+        return registerPort.register(place);
     }
 }

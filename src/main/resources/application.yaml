@@ -12,6 +12,19 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+    show-sql: true
+
+---
+spring:
+  config.activate.on-profile: test
+  datasource:
+    url: jdbc:mysql://localhost/koc
+    username: root
+    password: koc
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
 
 ---
 spring:

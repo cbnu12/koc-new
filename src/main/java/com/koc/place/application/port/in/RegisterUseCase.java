@@ -1,5 +1,8 @@
 package com.koc.place.application.port.in;
 
+
+import com.koc.place.domain.Place;
+
 public interface RegisterUseCase {
-    Long register(RegisterCommand command);
+    Long register(Place place);
 }

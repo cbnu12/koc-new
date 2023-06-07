@@ -1,6 +1,5 @@
 package com.koc.place.adapter.out.persistence;
 
-import com.koc.place.application.port.in.RegisterCommand;
 import com.koc.place.application.port.in.SearchQuery;
 import com.koc.place.application.port.out.RegisterPort;
 import com.koc.place.application.port.out.SearchPort;
@@ -17,8 +16,8 @@ class PlacePersistenceAdapter implements RegisterPort, SearchPort {
     private final PlaceJpaRepository repository;
 
     @Override
-    public Long register(RegisterCommand command) {
-        PlaceJpaEntity inserted = repository.save(commandToEntity(command));
+    public Long register(Place place) {
+        PlaceJpaEntity inserted = repository.save(commandToEntity(place));
         return inserted.getId();
     }
 
@@ -29,22 +28,21 @@ class PlacePersistenceAdapter implements RegisterPort, SearchPort {
         return entities.map(PlaceJpaEntity::toPlace);
     }
 
-    private PlaceJpaEntity commandToEntity(RegisterCommand command) {
+    private PlaceJpaEntity commandToEntity(Place place) {
         AddressJpaEmbeddedEntity addressEntity = AddressJpaEmbeddedEntity.builder()
-                .postNo(command.getPostNo())
-                .street(command.getStreet())
-                .parcel(command.getParcel())
-                .detail(command.getDetail())
-                .longitude(command.getLongitude())
-                .latitude(command.getLatitude())
+                .postNo(place.getAddress().getPostNo())
+                .street(place.getAddress().getStreet())
+                .parcel(place.getAddress().getParcel())
+                .detail(place.getAddress().getDetail())
+                .longitude(place.getAddress().getLongitude())
+                .latitude(place.getAddress().getLatitude())
                 .build();
 
         return PlaceJpaEntity.builder()
-                .name(command.getName())
-                .contact(command.getContact())
-                .url(command.getUrl())
-                .category(command.getCategory())
-                .description(command.getDescription())
+                .name(place.getName())
+                .contact(place.getContact())
+                .url(place.getUrl())
+                .description(place.getDescription())
                 .address(addressEntity)
                 .build();
     }

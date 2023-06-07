@@ -1,25 +1,23 @@
-package com.koc.place.application.port.in;
+package com.koc.place.adapter.in.rest;
 
+import com.koc.place.domain.Address;
+import com.koc.place.domain.Place;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.util.List;
-
 @Getter
 @Builder
 @AllArgsConstructor
-public class RegisterCommand {
+class RegisterRequest {
     @NotEmpty
     private final String name;
     @NotEmpty
     private final String contact;
     @NotEmpty
     private final String url;
-    @NotEmpty
-    private final List<String> category;
     @NotEmpty
     private final String description;
 
@@ -36,4 +34,9 @@ public class RegisterCommand {
     private final Double longitude;
     @NotNull
     private final Double latitude;
+
+    public Place toPlace() {
+        Address address = new Address(postNo, street, parcel, detail, longitude, latitude);
+        return new Place(null, name, contact, url, description, address);
+    }
 }

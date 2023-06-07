@@ -13,7 +13,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Builder
@@ -31,8 +30,6 @@ class PlaceJpaEntity {
     private String contact;
     private String url;
     private String description;
-    @ElementCollection
-    private List<String> category;
 
     @Embedded
     private AddressJpaEmbeddedEntity address;
@@ -53,7 +50,6 @@ class PlaceJpaEntity {
                 this.contact,
                 this.url,
                 this.description,
-                this.category,
                 this.address.toAddress()
         );
     }

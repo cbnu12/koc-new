@@ -5,8 +5,6 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.List;
-
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 class SearchResponse {
@@ -16,7 +14,6 @@ class SearchResponse {
     private final String contact;
     private final String url;
     private final String description;
-    private final List<String> category;
 
     private final String postNo;
     private final String street;
@@ -33,7 +30,6 @@ class SearchResponse {
                 place.getContact(),
                 place.getUrl(),
                 place.getDescription(),
-                place.getCategory(),
                 place.getAddress().getPostNo(),
                 place.getAddress().getStreet(),
                 place.getAddress().getParcel(),

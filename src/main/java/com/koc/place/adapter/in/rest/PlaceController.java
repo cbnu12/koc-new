@@ -1,6 +1,5 @@
 package com.koc.place.adapter.in.rest;
 
-import com.koc.place.application.port.in.RegisterCommand;
 import com.koc.place.application.port.in.RegisterUseCase;
 import com.koc.place.application.port.in.SearchQuery;
 import com.koc.place.application.port.in.SearchUseCase;
@@ -25,7 +24,7 @@ class PlaceController {
     }
 
     @PostMapping("/place")
-    public Long register(@RequestBody @Valid final RegisterCommand command) {
-        return registerUseCase.register(command);
+    public Long register(@RequestBody @Valid final RegisterRequest command) {
+        return registerUseCase.register(command.toPlace());
     }
 }

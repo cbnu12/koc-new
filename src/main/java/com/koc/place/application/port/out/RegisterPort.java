@@ -1,7 +1,7 @@
 package com.koc.place.application.port.out;
 
-import com.koc.place.application.port.in.RegisterCommand;
+import com.koc.place.domain.Place;
 
 public interface RegisterPort {
-    Long register(RegisterCommand command);
+    Long register(Place place);
 }
