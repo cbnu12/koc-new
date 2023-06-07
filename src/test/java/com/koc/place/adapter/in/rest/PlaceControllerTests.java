@@ -51,7 +51,7 @@ class PlaceControllerTests {
     void register() throws Exception {
         RegisterRequest request = createMockRequestData();
         ResultActions resultActions = mockMvc.perform(
-                MockMvcRequestBuilders.post("/place")
+                MockMvcRequestBuilders.post("/places")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .content(registerCommandToJsonString(request))
@@ -65,7 +65,7 @@ class PlaceControllerTests {
         register();
 
         ResultActions resultActions = mockMvc.perform(
-                MockMvcRequestBuilders.get("/place")
+                MockMvcRequestBuilders.get("/places")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .queryParam("page", "0")
@@ -77,5 +77,19 @@ class PlaceControllerTests {
                 .andExpect(jsonPath("$.size", is(10)))
                 .andExpect(jsonPath("$.total", is(1)))
                 .andExpect(jsonPath("$.items[0].name", is("이디야커피 구일역점")));
+    }
+
+    @Test
+    void searchById() throws Exception {
+        register();
+
+        ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.get("/places/3")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+
+        resultActions.andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", is("이디야커피 구일역점")));
     }
 }

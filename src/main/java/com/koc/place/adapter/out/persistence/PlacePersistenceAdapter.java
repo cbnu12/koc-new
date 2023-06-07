@@ -10,6 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 @RequiredArgsConstructor
 class PlacePersistenceAdapter implements RegisterPort, SearchPort {
@@ -26,6 +28,11 @@ class PlacePersistenceAdapter implements RegisterPort, SearchPort {
         Pageable pageable = PageRequest.of(query.getPage(), query.getSize());
         Page<PlaceJpaEntity> entities = repository.findAll(pageable);
         return entities.map(PlaceJpaEntity::toPlace);
+    }
+
+    @Override
+    public Optional<Place> searchById(Long id) {
+        return repository.findById(id).map(PlaceJpaEntity::toPlace);
     }
 
     private PlaceJpaEntity commandToEntity(Place place) {
