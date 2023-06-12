@@ -1,5 +1,6 @@
 package com.koc.keyword.adapter.out.persistence;
 
+import com.koc.keyword.domain.Keyword;
 import com.koc.keyword.domain.KeywordType;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -48,5 +49,9 @@ class KeywordJpaEntity {
         entity.text = text;
         entity.count = 0L;
         return entity;
+    }
+
+    public Keyword toKeyword() {
+        return new Keyword(text, count);
     }
 }

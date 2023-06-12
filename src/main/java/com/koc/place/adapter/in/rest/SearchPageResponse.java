@@ -11,10 +11,10 @@ import java.util.List;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 class SearchPageResponse {
-    private Integer page;
-    private Integer size;
-    private Long total;
-    private List<SearchResponse> items;
+    private final Integer page;
+    private final Integer size;
+    private final Long total;
+    private final List<SearchResponse> items;
 
     public static SearchPageResponse from(Page<Place> places) {
         return new SearchPageResponse(

@@ -3,7 +3,7 @@
 ```mermaid
 flowchart LR
     A1([키워드 카운트 증가])
-    A2([키워드 조회])
+    A2([인기검색어 조회])
 ```
 
 ### 키워드 카운트 증가
@@ -18,6 +18,4 @@ sequenceDiagram
         participant service
         participant adapter.persistence
     end
-    
-    
 ```
