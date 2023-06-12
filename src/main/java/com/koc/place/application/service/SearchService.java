@@ -1,8 +1,8 @@
 package com.koc.place.application.service;
 
-import com.koc.place.application.port.in.KeywordCountUpUseCase;
 import com.koc.place.application.port.in.SearchQuery;
 import com.koc.place.application.port.in.SearchUseCase;
+import com.koc.place.application.port.out.KeywordCountUpPort;
 import com.koc.place.application.port.out.SearchPort;
 import com.koc.place.domain.Place;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class SearchService implements SearchUseCase {
     private final SearchPort searchPort;
-    private final KeywordCountUpUseCase keywordCountUpUseCase;
+    private final KeywordCountUpPort keywordCountUpPort;
 
     @Override
     public Page<Place> search(SearchQuery query) {
@@ -25,7 +25,7 @@ public class SearchService implements SearchUseCase {
     @Override
     public Optional<Place> searchById(Long id) {
         Optional<Place> optionalPlace = searchPort.searchById(id);
-        optionalPlace.ifPresent(place -> keywordCountUpUseCase.increaseCount(place.getName()));
+        optionalPlace.ifPresent(place -> keywordCountUpPort.increaseCount(place.getId()));
         return optionalPlace;
     }
 }

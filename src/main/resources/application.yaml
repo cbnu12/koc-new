@@ -4,10 +4,6 @@ spring:
     url: jdbc:mysql://localhost/koc
     username: root
     password: koc
-  jpa:
-    hibernate:
-      ddl-auto: create
-    show-sql: true
   rabbitmq:
     host: localhost
     port: 5672
@@ -17,10 +13,14 @@ spring:
 ---
 spring:
   config.activate.on-profile: local
+  jpa:
+    show-sql: true
 
 ---
 spring:
   config.activate.on-profile: test
+  jpa:
+    show-sql: true
 
 ---
 spring:

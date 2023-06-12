@@ -37,9 +37,9 @@ sequenceDiagram
 
     User ->> Browser: 장소선택 및 설명 작성
     activate Browser
-    Browser ->> adapter.rest: POST /place (RegisterRequest)
+    Browser ->> adapter.rest: POST /places (RegisterRequest)
     activate adapter.rest
-    adapter.rest ->> service: RegisterCommand
+    adapter.rest ->> service: RegisterRequest
     activate service
     service ->> adapter.persistence: Place
     activate adapter.persistence
