@@ -15,53 +15,43 @@ flowchart LR
 ```mermaid
 sequenceDiagram
     actor User
-    box Client
-        participant Browser
-        participant Kakao
-    end
-    box Server
-        participant adapter.rest
-        participant service
-        participant adapter.persistence
-    end
+    participant Client
+    participant Kakao
+    participant Place
 
-    User ->> Browser: 장소검색
-
-    activate Browser
-    Browser ->> Kakao: Kakao Api Search
+    User ->> Client: 장소검색
+    activate Client
+    Client ->> Kakao: Kakao Api Search
     activate Kakao
-    Kakao -->> Browser: Result
+    Kakao -->> Client: Result
     deactivate Kakao
-    Browser -->> User: Result
-    deactivate Browser
+    Client -->> User: Result
+    deactivate Client
 
-    User ->> Browser: 장소선택 및 설명 작성
-    activate Browser
-    Browser ->> adapter.rest: POST /places (RegisterRequest)
-    activate adapter.rest
-    adapter.rest ->> service: RegisterRequest
-    activate service
-    service ->> adapter.persistence: Place
-    activate adapter.persistence
-    adapter.persistence -->> service: Id
-    deactivate adapter.persistence
-    service -->> adapter.rest: Id
-    deactivate service
-    adapter.rest -->> Browser: Id
-    deactivate adapter.rest
-    Browser -->> User: 등록 완료
-    deactivate Browser
+    User ->> Client: 장소선택 및 설명 작성
+    activate Client
+    Client ->> Place: [POST] /places
+    activate Place
+    Place -->> Client: Id
+    deactivate Place
+    Client -->> User: 등록 완료
+    deactivate Client
 ```
 
-### 장소 조회
+### 장소 조회 (상세 조회)
 
 ```mermaid
-flowchart LR
-    subgraph Client
-        A1("Call PlaceSearch Api")
-    end
-    subgraph Server
-        A1 -->|1| A`1
-        A`1("port.in SearchPlaceUseCase") -->|2| A'2("port.out SearchPlacePort") -->|3| A'3[("Query")]
-    end
+sequenceDiagram
+    actor User
+    participant Client
+    participant Place
+    participant KeywordMQ
+
+    User ->> Client: 상세조회
+    activate Client
+    Client ->>+ Place: [GET] /places/{id}
+    Place -) KeywordMQ: {Type: Place, Text: id} Publish
+    Place -->>- Client: Place
+    Client -->> User: Place
+    deactivate Client
 ```
