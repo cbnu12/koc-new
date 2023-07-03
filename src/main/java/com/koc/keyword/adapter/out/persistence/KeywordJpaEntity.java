@@ -39,19 +39,16 @@ class KeywordJpaEntity {
     @LastModifiedDate
     LocalDateTime updatedAt;
 
-    public void increaseCount() {
-        count += 1;
-    }
-
-    public static KeywordJpaEntity of(KeywordType type, String text) {
+    public static KeywordJpaEntity of(Keyword keyword) {
         KeywordJpaEntity entity = new KeywordJpaEntity();
-        entity.type = type;
-        entity.text = text;
+        entity.id = keyword.getId();
+        entity.type = keyword.getType();
+        entity.text = keyword.getText();
         entity.count = 0L;
         return entity;
     }
 
     public Keyword toKeyword() {
-        return new Keyword(text, count);
+        return new Keyword(id, type, text, count);
     }
 }

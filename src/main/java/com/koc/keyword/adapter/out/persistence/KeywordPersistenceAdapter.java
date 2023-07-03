@@ -1,8 +1,8 @@
 package com.koc.keyword.adapter.out.persistence;
 
-import com.koc.keyword.application.port.in.SearchQuery;
-import com.koc.keyword.application.port.out.IncreasePort;
-import com.koc.keyword.application.port.out.SearchPort;
+import com.koc.keyword.application.port.in.KeywordSearchQuery;
+import com.koc.keyword.application.port.out.KeywordSavePort;
+import com.koc.keyword.application.port.out.KeywordSearchPort;
 import com.koc.keyword.domain.Keyword;
 import com.koc.keyword.domain.KeywordType;
 import lombok.RequiredArgsConstructor;
@@ -15,20 +15,22 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-class KeywordPersistenceAdapter implements IncreasePort, SearchPort {
+class KeywordPersistenceAdapter implements KeywordSavePort, KeywordSearchPort {
     private final KeywordRepository repository;
 
     @Override
-    public void increase(KeywordType type, String text) {
-        Optional<KeywordJpaEntity> optionalEntity = repository.findByTypeAndText(type, text);
-        KeywordJpaEntity entity = optionalEntity.orElse(KeywordJpaEntity.of(type, text));
-
-        entity.increaseCount();
-        repository.save(entity);
+    public Long save(Keyword keyword) {
+        KeywordJpaEntity entity = repository.save(KeywordJpaEntity.of(keyword));
+        return entity.getId();
     }
 
     @Override
-    public List<Keyword> search(SearchQuery query) {
+    public Optional<Keyword> searchByTypeAndText(KeywordType type, String text) {
+        return repository.findByTypeAndText(type, text).map(KeywordJpaEntity::toKeyword);
+    }
+
+    @Override
+    public List<Keyword> search(KeywordSearchQuery query) {
         Page<KeywordJpaEntity> keywordEntities = repository.findByTypeOrderByCountDesc(query.getType(), Pageable.ofSize(query.getSize()));
         return keywordEntities.map(KeywordJpaEntity::toKeyword).getContent();
     }

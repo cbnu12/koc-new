@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class SearchQuery {
+public class KeywordSearchQuery {
     private final Integer size;
     private final KeywordType type;
 }

@@ -1,7 +1,7 @@
-package com.koc.keyword.application.port.out;
+package com.koc.keyword.application.port.in;
 
 import com.koc.keyword.domain.KeywordType;
 
-public interface IncreasePort {
+public interface KeywordIncreaseUseCase {
     void increase(KeywordType type, String keyword);
 }
