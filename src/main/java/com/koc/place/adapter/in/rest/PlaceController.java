@@ -1,8 +1,8 @@
 package com.koc.place.adapter.in.rest;
 
-import com.koc.place.application.port.in.RegisterUseCase;
-import com.koc.place.application.port.in.SearchQuery;
-import com.koc.place.application.port.in.SearchUseCase;
+import com.koc.place.application.port.in.PlaceRegisterUseCase;
+import com.koc.place.application.port.in.PlaceSearchQuery;
+import com.koc.place.application.port.in.PlaceSearchUseCase;
 import com.koc.place.domain.Place;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,25 +16,25 @@ import java.util.Optional;
 @RestController
 @RequiredArgsConstructor
 class PlaceController {
-    private final RegisterUseCase registerUseCase;
-    private final SearchUseCase searchUseCase;
+    private final PlaceRegisterUseCase placeRegisterUseCase;
+    private final PlaceSearchUseCase placeSearchUseCase;
 
     @GetMapping("/places")
-    public SearchPageResponse search(@Valid final SearchQuery query) {
-        Page<Place> places = searchUseCase.search(query);
-        return SearchPageResponse.from(places);
+    public PlaceSearchPageResponse search(@Valid final PlaceSearchQuery query) {
+        Page<Place> places = placeSearchUseCase.search(query);
+        return PlaceSearchPageResponse.from(places);
     }
 
     @GetMapping("/places/{id}")
-    public SearchResponse searchById(@PathVariable(name = "id") final Long id) {
-        Optional<Place> optionalPlace = searchUseCase.searchById(id);
+    public PlaceSearchResponse searchById(@PathVariable(name = "id") final Long id) {
+        Optional<Place> optionalPlace = placeSearchUseCase.searchById(id);
         Place place = optionalPlace
                 .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "[%s] 장소 조회 불가".formatted(id)));
-        return SearchResponse.from(place);
+        return PlaceSearchResponse.from(place);
     }
 
     @PostMapping("/places")
-    public Long register(@RequestBody @Valid final RegisterRequest command) {
-        return registerUseCase.register(command.toPlace());
+    public Long register(@RequestBody @Valid final PlaceRegisterRequest command) {
+        return placeRegisterUseCase.register(command.toPlace());
     }
 }

@@ -1,8 +1,8 @@
 package com.koc.place.adapter.out.persistence;
 
-import com.koc.place.application.port.in.SearchQuery;
-import com.koc.place.application.port.out.RegisterPort;
-import com.koc.place.application.port.out.SearchPort;
+import com.koc.place.application.port.in.PlaceSearchQuery;
+import com.koc.place.application.port.out.PlaceSavePort;
+import com.koc.place.application.port.out.PlaceSearchPort;
 import com.koc.place.domain.Place;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -14,17 +14,17 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-class PlacePersistenceAdapter implements RegisterPort, SearchPort {
+class PlacePersistenceAdapter implements PlaceSavePort, PlaceSearchPort {
     private final PlaceJpaRepository repository;
 
     @Override
-    public Long register(Place place) {
+    public Long save(Place place) {
         PlaceJpaEntity inserted = repository.save(commandToEntity(place));
         return inserted.getId();
     }
 
     @Override
-    public Page<Place> search(SearchQuery query) {
+    public Page<Place> search(PlaceSearchQuery query) {
         Pageable pageable = PageRequest.of(query.getPage(), query.getSize());
         Page<PlaceJpaEntity> entities = repository.findAll(pageable);
         return entities.map(PlaceJpaEntity::toPlace);

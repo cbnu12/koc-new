@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-class SearchResponse {
+class PlaceSearchResponse {
     private final Long id;
 
     private final String name;
@@ -23,8 +23,8 @@ class SearchResponse {
     private final Double longitude;
     private final Double latitude;
 
-    public static SearchResponse from(Place place) {
-        return new SearchResponse(
+    public static PlaceSearchResponse from(Place place) {
+        return new PlaceSearchResponse(
                 place.getId(),
                 place.getName(),
                 place.getContact(),

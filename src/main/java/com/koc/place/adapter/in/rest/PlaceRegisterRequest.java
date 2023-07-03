@@ -4,14 +4,13 @@ import com.koc.place.domain.Address;
 import com.koc.place.domain.Place;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-@Builder
-@AllArgsConstructor
-class RegisterRequest {
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+class PlaceRegisterRequest {
     @NotEmpty
     private final String name;
     @NotEmpty

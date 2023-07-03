@@ -5,8 +5,8 @@ import org.springframework.data.domain.Page;
 
 import java.util.Optional;
 
-public interface SearchUseCase {
-    Page<Place> search(SearchQuery query);
+public interface PlaceSearchUseCase {
+    Page<Place> search(PlaceSearchQuery query);
 
     Optional<Place> searchById(Long id);
 }

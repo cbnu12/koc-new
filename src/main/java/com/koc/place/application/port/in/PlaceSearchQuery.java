@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class SearchQuery {
+public class PlaceSearchQuery {
     @Min(value = 0)
     private final Integer page;
 

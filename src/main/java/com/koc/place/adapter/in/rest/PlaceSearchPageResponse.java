@@ -10,18 +10,18 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-class SearchPageResponse {
+class PlaceSearchPageResponse {
     private final Integer page;
     private final Integer size;
     private final Long total;
-    private final List<SearchResponse> items;
+    private final List<PlaceSearchResponse> items;
 
-    public static SearchPageResponse from(Page<Place> places) {
-        return new SearchPageResponse(
+    public static PlaceSearchPageResponse from(Page<Place> places) {
+        return new PlaceSearchPageResponse(
                 places.getNumber(),
                 places.getSize(),
                 places.getTotalElements(),
-                places.map(SearchResponse::from).getContent()
+                places.map(PlaceSearchResponse::from).getContent()
         );
     }
 }
