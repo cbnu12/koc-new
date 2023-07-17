@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Git Clone') {
             steps {
-                git branch: 'master', url: 'https://github.com/duckduck93/koc.git'
+                git branch: 'master', url: 'https://github.com/cbnu12/koc-place.git', credentialsId: 'GitHub-duckduck-id'
             }
         }
 
