@@ -28,12 +28,12 @@ class PlaceControllerTests {
     @Autowired
     private ObjectMapper mapper;
 
-    private String registerCommandToJsonString(RegisterRequest command) throws JsonProcessingException {
+    private String registerCommandToJsonString(PlaceRegisterRequest command) throws JsonProcessingException {
         return mapper.writeValueAsString(command);
     }
 
-    private RegisterRequest createMockRequestData() {
-        return new RegisterRequest(
+    private PlaceRegisterRequest createMockRequestData() {
+        return new PlaceRegisterRequest(
                 "이디야커피 구일역점",
                 "02-868-1816",
                 "https://www.ediya.com",
@@ -49,7 +49,7 @@ class PlaceControllerTests {
 
     @Test
     void register() throws Exception {
-        RegisterRequest request = createMockRequestData();
+        PlaceRegisterRequest request = createMockRequestData();
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders.post("/places")
                         .contentType(MediaType.APPLICATION_JSON)

@@ -1,8 +1,6 @@
 package com.koc.place.adapter.in.rest;
 
-import com.koc.place.application.port.in.PlaceRegisterUseCase;
-import com.koc.place.application.port.in.PlaceSearchQuery;
-import com.koc.place.application.port.in.PlaceSearchUseCase;
+import com.koc.place.application.port.in.*;
 import com.koc.place.domain.Place;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -18,10 +17,18 @@ import java.util.Optional;
 class PlaceController {
     private final PlaceRegisterUseCase placeRegisterUseCase;
     private final PlaceSearchUseCase placeSearchUseCase;
+    private final PlaceSearchPopularUseCase placeSearchPopularUseCase;
 
     @GetMapping("/places")
     public PlaceSearchPageResponse search(@Valid final PlaceSearchQuery query) {
-        Page<Place> places = placeSearchUseCase.search(query);
+        Page<Place> places;
+        if (query.getSortBy() == null) {
+            places = placeSearchUseCase.search(query);
+        } else if (Objects.requireNonNull(query.getSortBy()) == PlaceSortType.TREND) {
+            places = placeSearchPopularUseCase.searchTrend(query.getSize());
+        } else {
+            places = placeSearchUseCase.search(query);
+        }
         return PlaceSearchPageResponse.from(places);
     }
 

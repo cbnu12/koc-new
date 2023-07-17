@@ -14,4 +14,6 @@ public class PlaceSearchQuery {
     @Min(value = 1)
     @Max(value = 50)
     private final Integer size;
+
+    private final PlaceSortType sortBy;
 }

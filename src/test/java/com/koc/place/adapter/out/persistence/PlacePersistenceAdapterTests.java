@@ -35,7 +35,7 @@ class PlacePersistenceAdapterTests {
                 "구일역 근처 좌석 많은 카페. 위치가 위치인 만큼 사람들이 많지 않다. 대신 가는 것도 쉽지 않음,,, 😭",
                 address
         );
-        Long id = adapter.register(command);
+        Long id = adapter.save(command);
         Assertions.assertThat(id).isEqualTo(1L);
     }
 }

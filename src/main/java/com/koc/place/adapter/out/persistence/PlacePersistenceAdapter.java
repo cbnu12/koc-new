@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -33,6 +34,13 @@ class PlacePersistenceAdapter implements PlaceSavePort, PlaceSearchPort {
     @Override
     public Optional<Place> searchById(Long id) {
         return repository.findById(id).map(PlaceJpaEntity::toPlace);
+    }
+
+    @Override
+    public List<Place> searchByIds(List<Long> id) {
+        return repository.findAllById(id).stream()
+                .map(PlaceJpaEntity::toPlace)
+                .toList();
     }
 
     private PlaceJpaEntity commandToEntity(Place place) {
