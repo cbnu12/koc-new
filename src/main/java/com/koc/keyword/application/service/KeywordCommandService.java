@@ -7,6 +7,7 @@ import com.koc.keyword.domain.Keyword;
 import com.koc.keyword.domain.KeywordType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,6 +16,7 @@ public class KeywordCommandService implements KeywordIncreaseUseCase {
     private final KeywordSearchPort keywordSearchPort;
 
     @Override
+    @Transactional
     public void increase(KeywordType type, String text) {
         Keyword keyword = keywordSearchPort.searchByTypeAndText(type, text).orElse(Keyword.create(type, text));
         keyword.increase();
