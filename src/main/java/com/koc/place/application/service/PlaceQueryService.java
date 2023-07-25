@@ -49,8 +49,11 @@ public class PlaceQueryService implements PlaceSearchUseCase, PlaceSearchPopular
         Map<Long, Place> places = placeSearchPort.searchByIds(ids).stream()
                 .collect(Collectors.toMap(Place::getId, arg -> arg));
 
-        return new PageImpl<>(keywords.stream()
-                .map(arg -> places.get(Long.parseLong(arg.getText()))).toList(), PageRequest.of(0, size), size);
+        List<Place> results = keywords.stream()
+                .filter(keyword -> places.containsKey(Long.parseLong(keyword.getText())))
+                .map(keyword -> places.get(Long.parseLong(keyword.getText())))
+                .toList();
+        return new PageImpl<>(results, PageRequest.of(0, size), size);
     }
 
     @Override
