@@ -32,8 +32,10 @@ class CommentJpaEntity {
     private String text;
 
     @CreatedBy
+    @Column(updatable = false)
     Long createdBy;
     @CreatedDate
+    @Column(updatable = false)
     LocalDateTime createdAt;
     @LastModifiedBy
     Long updatedBy;

@@ -35,8 +35,10 @@ class PlaceJpaEntity {
     private AddressJpaEmbeddedEntity address;
 
     @CreatedBy
+    @Column(updatable = false)
     String createdBy;
     @CreatedDate
+    @Column(updatable = false)
     LocalDateTime createdAt;
     @LastModifiedBy
     String updatedBy;

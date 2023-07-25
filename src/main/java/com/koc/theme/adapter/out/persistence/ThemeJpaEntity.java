@@ -27,8 +27,10 @@ public class ThemeJpaEntity {
     private String description;
 
     @CreatedBy
+    @Column(updatable = false)
     String createdBy;
     @CreatedDate
+    @Column(updatable = false)
     LocalDateTime createdAt;
     @LastModifiedBy
     String updatedBy;

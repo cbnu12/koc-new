@@ -31,8 +31,10 @@ class KeywordJpaEntity {
     private Long count;
 
     @CreatedBy
+    @Column(updatable = false)
     String createdBy;
     @CreatedDate
+    @Column(updatable = false)
     LocalDateTime createdAt;
     @LastModifiedBy
     String updatedBy;
@@ -44,7 +46,7 @@ class KeywordJpaEntity {
         entity.id = keyword.getId();
         entity.type = keyword.getType();
         entity.text = keyword.getText();
-        entity.count = 0L;
+        entity.count = keyword.getCount();
         return entity;
     }
 
