@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class CommentSearchQuery {
-    @Min(value = 1)
+    @Min(value = 0)
     private final Integer page;
 
     @Min(value = 1)
