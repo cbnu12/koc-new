@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Git Clone') {
             steps {
-                git branch: 'master', url: 'https://github.com/cbnu12/koc-place.git', credentialsId: 'GitHub-duckduck-id'
+                git branch: 'master', url: 'https://github.com/cbnu12/koc-place.git', credentialsId: '18f7a807-9a0e-496f-9ebe-730697ad337a'
             }
         }
 
@@ -22,9 +22,9 @@ pipeline {
 
         stage('Docker Run') {
             steps {
-                sh 'sudo docker stop koc || true'
-                sh 'sudo docker rm koc || true'
-                sh 'sudo docker run --name koc --network koc-network -dit -p 8100:8080 koc:latest'
+                sh 'sudo docker stop koc-place || true'
+                sh 'sudo docker rm koc-place || true'
+                sh 'sudo docker run --name koc-place -dit -p 8100:8080 koc-place:latest'
             }
         }
     }
