@@ -21,7 +21,7 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                sh 'docker build -t koc:latest .'
+                sh 'docker build -t koc-place:latest .'
             }
         }
 
