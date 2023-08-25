@@ -21,15 +21,15 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                sh 'sudo docker build -t koc:latest .'
+                sh 'docker build -t koc:latest .'
             }
         }
 
         stage('Docker Run') {
             steps {
-                sh 'sudo docker stop koc-place || true'
-                sh 'sudo docker rm koc-place || true'
-                sh 'sudo docker run --name koc-place -dit -p 8100:8080 koc-place:latest'
+                sh 'docker stop koc-place || true'
+                sh 'docker rm koc-place || true'
+                sh 'docker run --name koc-place -dit -p 8100:8080 koc-place:latest'
             }
         }
     }
