@@ -34,11 +34,15 @@ spring:
 spring:
   config.activate.on-profile: prd
   datasource:
-    url: jdbc:mysql://koc-db/koc
-    username: root
-    password: koc
+    url: jdbc:mysql://121.167.132.221:3306/place
+    username: koc-place
+    password: 2012
+  jpa:
+    properties:
+        hibernate:
+          dialect: org.hibernate.dialect.MySQLDialect
   rabbitmq:
-    host: koc-mq
+    host: 121.167.132.221
     port: 5672
     username: guest
     password: guest
