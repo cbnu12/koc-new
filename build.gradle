@@ -9,6 +9,19 @@ group = 'com.koc'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
+
+
+ext {
+    set('springCloudVersion', "2021.0.0")
+    snippetsDir = file("${buildDir}/generated-snippets")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
@@ -47,11 +60,16 @@ dependencies {
 
     // RabbitMQ
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
+
+    //spring cloud
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation group: 'io.github.openfeign', name: 'feign-gson', version: '11.0'
+
+    //jsonwebtoken
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.1'
+
 }
 
-ext {
-    snippetsDir = file("${buildDir}/generated-snippets")
-}
 
 test {
     useJUnitPlatform()
