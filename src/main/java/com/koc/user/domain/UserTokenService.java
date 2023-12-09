@@ -1,6 +1,6 @@
 package com.koc.user.domain;
 
-import com.koc.user.application.repository.UserTokenRepository;
+import com.koc.user.adapter.out.persistence.UserTokenRepository;
 import com.koc.user.infrastructure.Entity.UserTokenEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.koc.user.application.repository;
+package com.koc.user.adapter.out.persistence;
 
 import com.koc.user.infrastructure.Entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
