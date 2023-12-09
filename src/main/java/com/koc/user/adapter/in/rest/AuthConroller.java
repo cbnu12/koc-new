@@ -1,4 +1,4 @@
-package com.koc.user.application.controller;
+package com.koc.user.adapter.in.rest;
 
 import com.koc.user.application.jwt.TokenCheckResponse;
 import com.koc.user.application.jwt.TokenResponse;
