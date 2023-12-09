@@ -1,8 +1,8 @@
 package com.koc.user.application.service;
 
 
-import com.koc.user.application.enums.LoginType;
-import com.koc.user.application.enums.UserStatus;
+import com.koc.user.domain.LoginType;
+import com.koc.user.domain.UserStatus;
 import com.koc.user.application.jwt.JwtProvider;
 import com.koc.user.application.jwt.TokenCheckResponse;
 import com.koc.user.application.jwt.TokenDataResponse;

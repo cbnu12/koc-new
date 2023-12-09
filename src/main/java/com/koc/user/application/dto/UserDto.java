@@ -1,7 +1,7 @@
 package com.koc.user.application.dto;
 
-import com.koc.user.application.enums.LoginType;
-import com.koc.user.application.enums.UserStatus;
+import com.koc.user.domain.LoginType;
+import com.koc.user.domain.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

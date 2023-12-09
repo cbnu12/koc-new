@@ -1,4 +1,4 @@
-package com.koc.user.application.enums;
+package com.koc.user.domain;
 
 public enum LoginType {
     ORIGIN, KAKAO

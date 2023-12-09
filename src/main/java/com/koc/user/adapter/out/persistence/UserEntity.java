@@ -1,7 +1,7 @@
 package com.koc.user.adapter.out.persistence;
 
-import com.koc.user.application.enums.LoginType;
-import com.koc.user.application.enums.UserStatus;
+import com.koc.user.domain.LoginType;
+import com.koc.user.domain.UserStatus;
 import com.koc.user.domain.KakaoUser;
 import com.koc.user.domain.User;
 import jakarta.persistence.*;
