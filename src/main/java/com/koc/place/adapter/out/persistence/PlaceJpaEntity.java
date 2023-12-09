@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "place")
+@Table(name = "place", schema = "koc")
 @EntityListeners(AuditingEntityListener.class)
 class PlaceJpaEntity {
     @Id

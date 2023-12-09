@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
-@Table(name = "comment")
+@Table(name = "comment", schema = "koc")
 @EntityListeners(AuditingEntityListener.class)
 class CommentJpaEntity {
     @Id

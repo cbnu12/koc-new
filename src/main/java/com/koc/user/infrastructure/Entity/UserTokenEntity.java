@@ -11,7 +11,7 @@ import jakarta.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user_token")
+@Table(name = "user_token", schema = "koc")
 public class UserTokenEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

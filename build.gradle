@@ -68,6 +68,9 @@ dependencies {
     //jsonwebtoken
     implementation 'io.jsonwebtoken:jjwt-api:0.11.1'
 
+    // h2
+    implementation 'com.h2database:h2:2.2.224'
+
 }
 
 

@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
-@Table(name = "theme")
+@Table(name = "theme", schema = "koc")
 @EntityListeners(AuditingEntityListener.class)
 public class ThemeJpaEntity {
     @Id

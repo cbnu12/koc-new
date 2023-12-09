@@ -15,7 +15,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "keyword", indexes = {
+@Table(name = "keyword", schema = "koc", indexes = {
         @Index(name = "Keyword_Text_Index", columnList = "type, text", unique = true)
 })
 @Getter

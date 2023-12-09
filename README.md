@@ -7,5 +7,5 @@ JPA ddl auto 기능을 활용한다.
 todo. exchange와 queue 생성하는 script를 만든다. <br/>
 
 ```shell
-docker run -d --name rabbitmq -p 5672:5672 -p 8080:15672 --restart=unless-stopped rabbitmq:management
+docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 --restart=unless-stopped rabbitmq:management
 ```
