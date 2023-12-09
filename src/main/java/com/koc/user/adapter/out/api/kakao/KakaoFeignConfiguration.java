@@ -1,4 +1,4 @@
-package com.koc.user.application.config;
+package com.koc.user.adapter.out.api.kakao;
 
 import feign.Client;
 import org.springframework.context.annotation.Bean;

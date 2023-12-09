@@ -1,4 +1,4 @@
-package com.koc.user.application.sociallogin.kakao;
+package com.koc.user.adapter.out.api.kakao;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
