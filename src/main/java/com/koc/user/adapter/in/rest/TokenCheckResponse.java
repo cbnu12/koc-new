@@ -1,14 +1,8 @@
 package com.koc.user.adapter.in.rest;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor(staticName = "of")
 public class TokenCheckResponse {
-    private String code;
-    private String msg;
-    private String acsessToken;
+    private final String assessToken;
 }

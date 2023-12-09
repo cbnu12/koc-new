@@ -1,44 +1,24 @@
 package com.koc.user.domain;
 
-import com.koc.user.adapter.out.persistence.UserRepository;
-import com.koc.user.adapter.out.persistence.UserEntity;
+import com.koc.user.adapter.out.persistence.UserPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
-    private final UserRepository userRepository;
+    private final UserPort userPort;
 
-    public Optional<User> findByKakaoId(Long Id) {
-        Optional<UserEntity> entity = userRepository.findByKakaoId(Id);
-        if (entity.isEmpty()) {
-            return Optional.empty();
-        }
-        return Optional.of(entity.get().toUser());
+    public User withdraw(Long id) {
+        User user = userPort
+                .findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재 하지 않습니다."));
+        user.withdraw();
+        return userPort.save(user);
     }
 
-    public Optional<User> findByEmail(String email) {
-        Optional<UserEntity> entity = userRepository.findByEmail(email);
-        if (entity.isEmpty()) {
-            return Optional.empty();
-        }
-        return Optional.of(entity.get().toUser());
+    public UserDto findById(long id) {
+        return userPort.findById(id).orElseThrow(() -> new IllegalArgumentException("없는 사용자")).toDto();
     }
-
-    public Optional<User> findById(Long Id) {
-        Optional<UserEntity> entity = userRepository.findById(Id);
-        if (entity.isEmpty()) {
-            return Optional.empty();
-        }
-        return Optional.of(entity.get().toUser());
-    }
-
-    public User save(User user) {
-        return userRepository.save(user.toEntity()).toUser();
-    }
-
-
 }

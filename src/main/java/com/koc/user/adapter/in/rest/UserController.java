@@ -1,14 +1,14 @@
 package com.koc.user.adapter.in.rest;
 
 import com.koc.user.domain.UserDto;
-import com.koc.user.application.service.UserService;
+import com.koc.user.domain.UserService;
 import com.koc.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/user")
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/user")
 public class UserController {
     private final UserService userService;
 

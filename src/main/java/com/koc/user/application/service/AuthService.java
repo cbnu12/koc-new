@@ -1,20 +1,15 @@
 package com.koc.user.application.service;
 
 
-import com.koc.user.domain.LoginType;
-import com.koc.user.domain.UserStatus;
-import com.koc.user.adapter.in.rest.TokenCheckResponse;
-import com.koc.user.adapter.in.rest.TokenDataResponse;
-import com.koc.user.adapter.in.rest.TokenResponse;
-import com.koc.user.domain.UserService;
-import com.koc.user.domain.UserTokenService;
+import com.koc.common.exception.NotFoundException;
+import com.koc.user.application.port.in.CheckAccessTokenUseCase;
+import com.koc.user.application.port.in.GetKakaoLoginUrlUseCase;
+import com.koc.user.application.port.in.LoginUseCase;
+import com.koc.user.domain.*;
 import com.koc.user.adapter.out.api.kakao.KakaoClient;
 import com.koc.user.adapter.out.api.kakao.KakaoToken;
 import com.koc.user.adapter.out.api.kakao.KakaoUserInfo;
-import com.koc.user.domain.KakaoUser;
-import com.koc.user.domain.User;
-import com.koc.user.domain.UserToken;
-import io.jsonwebtoken.Claims;
+import com.koc.user.adapter.out.persistence.UserPort;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +22,9 @@ import java.util.Optional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class AuthService {
+public class AuthService implements LoginUseCase, CheckAccessTokenUseCase, GetKakaoLoginUrlUseCase {
     private final KakaoClient client;
-    private final UserService userService;
+    private final UserPort userPort;
     private final UserTokenService userTokenService;
     private static final int accessTokenValidTime = 30;
     private static final int refreshTokenValidTime = 300;
@@ -45,65 +40,26 @@ public class AuthService {
     @Value("${social-login.kakao.javascript_key}")
     private String javascriptKey;
 
-    public String getKakaoLoginUrl() {
-        return kakaoOauthUri + "/authorize?client_id=" + javascriptKey + "&redirect_uri=" + redirectUri + "&response_type=code";
-    }
-
-
-    public TokenResponse login(final String code) {
+    @Override
+    public TokenDto login(final String code) {
         KakaoToken kakaoToken = getToken(code);
         log.debug(kakaoToken.toString());
         KakaoUserInfo info = getKakaoUserInfo(kakaoToken.getAccessToken());
         log.debug(info.toString());
-        Optional<User> user = userService.findByKakaoId(info.getId());
+        Optional<User> user = userPort.findByKakaoId(info.getId());
         if (user.isEmpty()) {
             Optional.of(kakaoJoin(info));
         }
         return createToken(info.getEmail());
     }
 
-    public TokenCheckResponse checkToken(String acsessToken, String email) {
-        try {
-            Claims claims = jwtProvider.parseJwtToken(acsessToken);
-        } catch (ExpiredJwtException e) {
-            UserToken userToken = userTokenService.findByEmail(email).orElseThrow(() -> new RuntimeException());
-            if (userToken.isExpire()) {
-                return TokenCheckResponse.builder()
-                        .code("401")
-                        .msg("refresh token is expire")
-                        .build();
-            }
-
-            return TokenCheckResponse.builder()
-                    .code("200")
-                    .msg("success")
-                    .acsessToken(jwtProvider.createToken(email, accessTokenValidTime))
-                    .build();
-        }
-        return TokenCheckResponse.builder()
-                .code("200")
-                .msg("success")
-                .acsessToken(acsessToken)
-                .build();
-    }
-
-    public TokenResponse createToken(String email) {
+    public TokenDto createToken(String email) {
         String accessToken = jwtProvider.createToken(email, accessTokenValidTime);
         String refreshToken = jwtProvider.createToken(email, refreshTokenValidTime);
 
         saveRefreshToken(email, refreshToken);
 
-        TokenDataResponse tokenDataResponse = TokenDataResponse.builder()
-                .refreshToken(refreshToken)
-                .acsessToken(accessToken)
-                .key(email)
-                .build();
-
-        return TokenResponse.builder()
-                .msg("ok")
-                .code("200")
-                .data(tokenDataResponse)
-                .build();
+        return new TokenDto(accessToken, refreshToken, email);
     }
 
     public void saveRefreshToken(String userEmail, String refreshToken) {
@@ -144,7 +100,30 @@ public class AuthService {
                 .userStatus(UserStatus.ACTIVE)
                 .build();
 
-        return userService.save(user);
+        return userPort.save(user);
     }
 
+    @Override
+    public TokenDto check(String accessToken, String email) {
+        try {
+            jwtProvider.parseJwtToken(accessToken);
+        } catch (ExpiredJwtException e) {
+            UserToken userToken = userTokenService.findByEmail(email)
+                    .orElseThrow(() -> new NotFoundException("user token"));
+            if (userToken.isExpire()) {
+                throw e;
+            }
+
+            return new TokenDto(null, jwtProvider.createToken(email, accessTokenValidTime), email);
+        }
+        return new TokenDto(null ,accessToken, email);
+    }
+
+    @Override
+    public String getUrl() {
+        return kakaoOauthUri + "/authorize" +
+                "?client_id=" + javascriptKey +
+                "&redirect_uri=" + redirectUri +
+                "&response_type=code";
+    }
 }

@@ -1,30 +1,34 @@
 package com.koc.user.adapter.in.rest;
 
-import com.koc.user.application.service.AuthService;
+import com.koc.user.application.port.in.CheckAccessTokenUseCase;
+import com.koc.user.application.port.in.GetKakaoLoginUrlUseCase;
+import com.koc.user.application.port.in.LoginUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/auth")
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/auth")
 public class AuthController {
-
-    private final AuthService authService;
+    private final LoginUseCase loginUseCase;
+    private final CheckAccessTokenUseCase checkAccessTokenUseCase;
+    private final GetKakaoLoginUrlUseCase getKakaoLoginUrlUseCase;
 
     @GetMapping("/login")
     public TokenResponse login(@RequestParam String code) {
-        return authService.login(code);
+        var result = loginUseCase.login(code);
+        return TokenResponse.of(result.refreshToken(), result.accessToken(), result.key());
     }
 
-    @GetMapping("/checkAcessToken")
+    @GetMapping("/checkAccessToken")
     public TokenCheckResponse checkToken(@RequestHeader(value = "Authorization") String token, @RequestParam String email) throws Exception {
-
-        return authService.checkToken(token, email);
+        var result = checkAccessTokenUseCase.check(token, email);
+        return TokenCheckResponse.of(result.accessToken());
     }
 
     @GetMapping("/kakao-login-url")
     public String kakaoLogin() {
-        return authService.getKakaoLoginUrl();
+        return getKakaoLoginUrlUseCase.getUrl();
     }
 
 }
