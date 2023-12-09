@@ -1,4 +1,4 @@
-package com.koc.user.domain;
+package com.koc.user.domain.user;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,9 +1,9 @@
 package com.koc.user.adapter.out.persistence;
 
-import com.koc.user.domain.LoginType;
-import com.koc.user.domain.UserStatus;
-import com.koc.user.domain.KakaoUser;
-import com.koc.user.domain.User;
+import com.koc.user.domain.user.LoginType;
+import com.koc.user.domain.user.UserStatus;
+import com.koc.user.domain.user.KakaoUser;
+import com.koc.user.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,7 +37,8 @@ public class UserEntity {
                 .kocId(kocId)
                 .pw(pw)
                 .refreshToken(refreshToken)
-                .kakaoUser(new KakaoUser(kakaoId, email))
+                .kakaoUserId(kakaoId)
+                .email(email)
                 .loginType(loginType)
                 .userStatus(userStatus)
                 .build();

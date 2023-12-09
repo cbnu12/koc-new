@@ -1,7 +1,5 @@
-package com.koc.user.domain;
+package com.koc.user.domain.user;
 
-import com.koc.user.domain.LoginType;
-import com.koc.user.domain.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

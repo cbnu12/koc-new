@@ -1,4 +1,4 @@
-package com.koc.user.domain;
+package com.koc.user.domain.user;
 
 import com.koc.user.adapter.out.persistence.UserEntity;
 import lombok.AllArgsConstructor;
@@ -13,9 +13,10 @@ public class User {
     private String kocId;
     private String pw;
     private String refreshToken;
-    private KakaoUser kakaoUser;
+    private Long kakaoUserId;
     private LoginType loginType;
     private UserStatus userStatus;
+    private String email;
 
 
     public LoginType isKakaoLogin() {
@@ -37,8 +38,8 @@ public class User {
                 .kocId(kocId)
                 .pw(pw)
                 .refreshToken(refreshToken)
-                .kakaoId(kakaoUser.getKakaoId())
-                .email(kakaoUser.getEmail())
+                .kakaoId(kakaoUserId)
+                .email(email)
                 .loginType(loginType)
                 .userStatus(userStatus)
                 .build();
@@ -50,8 +51,8 @@ public class User {
                 .id(id)
                 .kocId(kocId)
                 .pw(pw)
-                .kakaoId(kakaoUser.getKakaoId())
-                .email(kakaoUser.getEmail())
+                .kakaoId(kakaoUserId)
+                .email(email)
                 .loginType(loginType)
                 .userStatus(userStatus)
                 .build();

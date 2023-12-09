@@ -4,15 +4,18 @@ import com.koc.common.exception.NotFoundException;
 import com.koc.user.adapter.out.api.kakao.KakaoClient;
 import com.koc.user.adapter.out.api.kakao.KakaoToken;
 import com.koc.user.adapter.out.api.kakao.KakaoUserInfo;
-import com.koc.user.adapter.out.persistence.UserPort;
 import com.koc.user.application.port.in.CheckAccessTokenUseCase;
 import com.koc.user.application.port.in.GetKakaoLoginUrlUseCase;
 import com.koc.user.application.port.in.LoginUseCase;
 import com.koc.user.application.port.out.LoadTokenByEmailPort;
+import com.koc.user.application.port.out.LoadUserByKakaoId;
 import com.koc.user.application.port.out.SaveTokenPort;
-import com.koc.user.domain.*;
+import com.koc.user.application.port.out.SaveUserPort;
 import com.koc.user.domain.token.TokenDto;
 import com.koc.user.domain.token.TokenService;
+import com.koc.user.domain.user.LoginType;
+import com.koc.user.domain.user.UserDto;
+import com.koc.user.domain.user.UserStatus;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +30,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthService implements LoginUseCase, CheckAccessTokenUseCase, GetKakaoLoginUrlUseCase {
     private final KakaoClient client;
-    private final UserPort userPort;
+    private final LoadUserByKakaoId loadUserByKakaoId;
     private final LoadTokenByEmailPort loadTokenByEmailPort;
     private final SaveTokenPort saveTokenPort;
+    private final SaveUserPort saveUserPort;
     private final TokenService tokenService;
     private static final int accessTokenValidTime = 30;
     private static final int refreshTokenValidTime = 300;
@@ -50,9 +54,9 @@ public class AuthService implements LoginUseCase, CheckAccessTokenUseCase, GetKa
         log.debug("get kakao token : {}", kakaoToken.toString());
         KakaoUserInfo info = getKakaoUserInfo(kakaoToken.getAccessToken());
         log.debug("get kakao user info : {}", info.toString());
-        Optional<User> user = userPort.findByKakaoId(info.getId());
-        if (user.isEmpty()) {
-            Optional.of(kakaoJoin(info));
+        Optional<UserDto> userDto = loadUserByKakaoId.loadByKakaoId(info.getId());
+        if (userDto.isEmpty()) {
+            kakaoJoin(info);
         }
         return createToken(info.getEmail());
     }
@@ -67,7 +71,7 @@ public class AuthService implements LoginUseCase, CheckAccessTokenUseCase, GetKa
     }
 
     public void saveRefreshToken(String userEmail, String refreshToken) {
-        var tokenDto = loadTokenByEmailPort.load(userEmail).orElseThrow(() -> new RuntimeException());
+        var tokenDto = loadTokenByEmailPort.load(userEmail).orElseThrow(RuntimeException::new);
         tokenDto = tokenService.updateRefreshToken(tokenDto, refreshToken);
         saveTokenPort.save(tokenDto);
     }
@@ -92,19 +96,15 @@ public class AuthService implements LoginUseCase, CheckAccessTokenUseCase, GetKa
         }
     }
 
-    public User kakaoJoin(KakaoUserInfo kakaoUserInfo) {
-        KakaoUser kakaoUser = KakaoUser.builder().
-                kakaoId(kakaoUserInfo.getId())
+    public void kakaoJoin(KakaoUserInfo kakaoUserInfo) {
+        var userDto = UserDto.builder()
+                .kakaoId(kakaoUserInfo.getId())
                 .email(kakaoUserInfo.getEmail())
-                .build();
-
-        User user = User.builder()
-                .kakaoUser(kakaoUser)
                 .loginType(LoginType.KAKAO)
                 .userStatus(UserStatus.ACTIVE)
                 .build();
 
-        return userPort.save(user);
+        saveUserPort.save(userDto);
     }
 
     @Override
