@@ -2,7 +2,7 @@ package com.koc.user.application.controller;
 
 import com.koc.user.application.jwt.TokenCheckResponse;
 import com.koc.user.application.jwt.TokenResponse;
-import com.koc.user.application.service.authService;
+import com.koc.user.application.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthConroller {
 
-    private final authService authService;
+    private final AuthService authService;
 
     @GetMapping("/login")
     public TokenResponse login(@RequestParam String code) {

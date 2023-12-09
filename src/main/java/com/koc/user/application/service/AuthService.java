@@ -28,7 +28,7 @@ import java.util.Optional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class authService {
+public class AuthService {
     private final KakaoClient client;
     private final UserService userService;
     private final UserTokenService userTokenService;
