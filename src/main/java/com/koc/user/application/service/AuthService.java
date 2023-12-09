@@ -3,10 +3,9 @@ package com.koc.user.application.service;
 
 import com.koc.user.domain.LoginType;
 import com.koc.user.domain.UserStatus;
-import com.koc.user.application.jwt.JwtProvider;
-import com.koc.user.application.jwt.TokenCheckResponse;
-import com.koc.user.application.jwt.TokenDataResponse;
-import com.koc.user.application.jwt.TokenResponse;
+import com.koc.user.adapter.in.rest.TokenCheckResponse;
+import com.koc.user.adapter.in.rest.TokenDataResponse;
+import com.koc.user.adapter.in.rest.TokenResponse;
 import com.koc.user.domain.UserService;
 import com.koc.user.domain.UserTokenService;
 import com.koc.user.adapter.out.api.kakao.KakaoClient;

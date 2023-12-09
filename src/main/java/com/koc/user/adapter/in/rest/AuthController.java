@@ -1,7 +1,5 @@
 package com.koc.user.adapter.in.rest;
 
-import com.koc.user.application.jwt.TokenCheckResponse;
-import com.koc.user.application.jwt.TokenResponse;
 import com.koc.user.application.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

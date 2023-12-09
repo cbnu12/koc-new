@@ -1,4 +1,4 @@
-package com.koc.user.application.jwt;
+package com.koc.user.adapter.in.rest;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TokenResponse {
+public class TokenCheckResponse {
     private String code;
     private String msg;
-    private TokenDataResponse data;
+    private String acsessToken;
 }

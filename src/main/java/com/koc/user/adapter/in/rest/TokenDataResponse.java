@@ -1,4 +1,4 @@
-package com.koc.user.application.jwt;
+package com.koc.user.adapter.in.rest;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
