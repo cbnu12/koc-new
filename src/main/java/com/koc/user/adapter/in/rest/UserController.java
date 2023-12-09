@@ -1,6 +1,6 @@
 package com.koc.user.adapter.in.rest;
 
-import com.koc.user.application.dto.UserDto;
+import com.koc.user.domain.UserDto;
 import com.koc.user.application.service.UserService;
 import com.koc.user.domain.User;
 import lombok.RequiredArgsConstructor;

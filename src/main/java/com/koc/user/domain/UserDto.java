@@ -1,4 +1,4 @@
-package com.koc.user.application.dto;
+package com.koc.user.domain;
 
 import com.koc.user.domain.LoginType;
 import com.koc.user.domain.UserStatus;

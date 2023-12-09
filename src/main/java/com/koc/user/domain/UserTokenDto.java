@@ -1,4 +1,4 @@
-package com.koc.user.application.dto;
+package com.koc.user.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
