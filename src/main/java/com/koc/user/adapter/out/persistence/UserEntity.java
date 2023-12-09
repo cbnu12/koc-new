@@ -1,4 +1,4 @@
-package com.koc.user.infrastructure.Entity;
+package com.koc.user.adapter.out.persistence;
 
 import com.koc.user.application.enums.LoginType;
 import com.koc.user.application.enums.UserStatus;

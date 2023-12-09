@@ -1,4 +1,4 @@
-package com.koc.user.infrastructure.Entity;
+package com.koc.user.adapter.out.persistence;
 
 import com.koc.user.domain.UserToken;
 import lombok.AllArgsConstructor;

@@ -1,7 +1,7 @@
 package com.koc.user.domain;
 
 import com.koc.user.adapter.out.persistence.UserRepository;
-import com.koc.user.infrastructure.Entity.UserEntity;
+import com.koc.user.adapter.out.persistence.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

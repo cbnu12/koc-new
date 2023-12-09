@@ -2,7 +2,7 @@ package com.koc.user.domain;
 
 import com.koc.user.application.dto.UserTokenDto;
 import com.koc.user.application.jwt.JwtProvider;
-import com.koc.user.infrastructure.Entity.UserTokenEntity;
+import com.koc.user.adapter.out.persistence.UserTokenEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.AllArgsConstructor;

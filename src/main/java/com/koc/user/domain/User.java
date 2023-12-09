@@ -3,7 +3,7 @@ package com.koc.user.domain;
 import com.koc.user.application.dto.UserDto;
 import com.koc.user.application.enums.LoginType;
 import com.koc.user.application.enums.UserStatus;
-import com.koc.user.infrastructure.Entity.UserEntity;
+import com.koc.user.adapter.out.persistence.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
