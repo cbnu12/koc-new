@@ -82,10 +82,3 @@ asciidoctor {
     configurations 'asciidoctorExt'
     inputs.dir snippetsDir
 }
-
-//bootJar {
-//    dependsOn asciidoctor
-//    from("${asciidoctor.outputDir}/html5") {
-//        into 'static/docs'
-//    }
-//}
