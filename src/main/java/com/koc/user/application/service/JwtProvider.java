@@ -5,22 +5,19 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import lombok.experimental.UtilityClass;
 
 import java.util.Base64;
 import java.util.Date;
 
-@Component
+@UtilityClass
 public class JwtProvider {
 
+    private static String secretKey = "testPassword";
 
-    @Value("${jwt.password}")
-    private String secretKey;
-
-    public String createToken(String subject, int tokenValidTime) {
+    public static String createToken(String subject, int tokenValidTime) {
         Date now = new Date();
-        Date expiration = new Date(System.currentTimeMillis() + (60000 * tokenValidTime));
+        Date expiration = new Date(System.currentTimeMillis() + (60000L * tokenValidTime));
 
         return Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
@@ -33,8 +30,8 @@ public class JwtProvider {
     }
 
 
-    public Claims parseJwtToken(String token) {
-        token = BearerRemove(token);
+    public static Claims parseJwtToken(String token) {
+        token = bearerRemove(token);
         return Jwts.parser()
                 .setSigningKey(Base64.getEncoder().encodeToString(secretKey.getBytes()))
                 .parseClaimsJws(token)
@@ -42,7 +39,7 @@ public class JwtProvider {
     }
 
 
-    private String BearerRemove(String token) {
+    private static String bearerRemove(String token) {
         return token.substring("Bearer ".length());
     }
 }

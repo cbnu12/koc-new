@@ -1,12 +1,14 @@
 package com.koc.user.adapter.out.persistence;
 
-import com.koc.user.domain.UserToken;
+import com.koc.user.domain.token.UserToken;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import jakarta.persistence.*;
 
+@Getter
 @Entity
 @Builder
 @NoArgsConstructor

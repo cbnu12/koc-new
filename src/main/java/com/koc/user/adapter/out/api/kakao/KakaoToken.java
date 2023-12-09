@@ -4,23 +4,15 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Getter
-@NoArgsConstructor
+@RequiredArgsConstructor
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class KakaoToken {
-    private String tokenType;
-    private String accessToken;
-    private String refreshToken;
-    private Long expiresIn;
-    private Long refreshTokenExpiresIn;
-
-
-    public KakaoToken(String tokenType, String accessToken, String refreshToken, Long expiresIn, Long refreshTokenExpiresIn) {
-        this.tokenType = tokenType;
-        this.accessToken = accessToken;
-        this.refreshToken = refreshToken;
-        this.expiresIn = expiresIn;
-        this.refreshTokenExpiresIn = refreshTokenExpiresIn;
-    }
+    private final String tokenType;
+    private final String accessToken;
+    private final String refreshToken;
+    private final Long expiresIn;
+    private final Long refreshTokenExpiresIn;
 }

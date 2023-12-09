@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TokenDataResponse {
     private String refreshToken;
-    private String acsessToken;
+    private String accessToken;
     private String key;
 }
