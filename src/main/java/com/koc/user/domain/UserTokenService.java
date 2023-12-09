@@ -1,7 +1,6 @@
-package com.koc.user.application.service.domainService;
+package com.koc.user.domain;
 
 import com.koc.user.application.repository.UserTokenRepository;
-import com.koc.user.domain.UserToken;
 import com.koc.user.infrastructure.Entity.UserTokenEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,7 +9,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserTokenDomainService {
+public class UserTokenService {
     private final UserTokenRepository userTokenRepository;
 
     public Optional<UserToken> findByEmail(String email) {

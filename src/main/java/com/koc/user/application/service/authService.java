@@ -7,8 +7,8 @@ import com.koc.user.application.jwt.JwtProvider;
 import com.koc.user.application.jwt.TokenCheckResponse;
 import com.koc.user.application.jwt.TokenDataResponse;
 import com.koc.user.application.jwt.TokenResponse;
-import com.koc.user.application.service.domainService.UserDomainService;
-import com.koc.user.application.service.domainService.UserTokenDomainService;
+import com.koc.user.domain.UserService;
+import com.koc.user.domain.UserTokenService;
 import com.koc.user.application.sociallogin.kakao.KakaoClient;
 import com.koc.user.application.sociallogin.kakao.KakaoToken;
 import com.koc.user.application.sociallogin.kakao.KakaoUserInfo;
@@ -30,8 +30,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class authService {
     private final KakaoClient client;
-    private final UserDomainService userDomainService;
-    private final UserTokenDomainService userTokenDomainService;
+    private final UserService userService;
+    private final UserTokenService userTokenService;
     private static final int accessTokenValidTime = 30;
     private static final int refreshTokenValidTime = 300;
     private final JwtProvider jwtProvider;
@@ -56,7 +56,7 @@ public class authService {
         log.debug(kakaoToken.toString());
         KakaoUserInfo info = getKakaoUserInfo(kakaoToken.getAccessToken());
         log.debug(info.toString());
-        Optional<User> user = userDomainService.findByKakaoId(info.getId());
+        Optional<User> user = userService.findByKakaoId(info.getId());
         if (user.isEmpty()) {
             Optional.of(kakaoJoin(info));
         }
@@ -67,7 +67,7 @@ public class authService {
         try {
             Claims claims = jwtProvider.parseJwtToken(acsessToken);
         } catch (ExpiredJwtException e) {
-            UserToken userToken = userTokenDomainService.findByEmail(email).orElseThrow(() -> new RuntimeException());
+            UserToken userToken = userTokenService.findByEmail(email).orElseThrow(() -> new RuntimeException());
             if (userToken.isExpire()) {
                 return TokenCheckResponse.builder()
                         .code("401")
@@ -108,9 +108,9 @@ public class authService {
     }
 
     public void saveRefreshToken(String userEmail, String refreshToken) {
-        UserToken userToken = userTokenDomainService.findByEmail(userEmail).orElseThrow(() -> new RuntimeException());
+        UserToken userToken = userTokenService.findByEmail(userEmail).orElseThrow(() -> new RuntimeException());
         userToken.setRefreshToken(refreshToken);
-        userTokenDomainService.save(userToken);
+        userTokenService.save(userToken);
     }
 
 
@@ -145,7 +145,7 @@ public class authService {
                 .userStatus(UserStatus.ACTIVE)
                 .build();
 
-        return userDomainService.save(user);
+        return userService.save(user);
     }
 
 }
