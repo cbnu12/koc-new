@@ -15,12 +15,12 @@ import java.util.Date;
 @UtilityClass
 public class JwtProvider {
 
-    private static final String secretKey = "testPassword";
+    private static final String SECRET_KEY = "testPassword";
 
     public static String createToken(String subject, int tokenValidTime) {
         Date now = new Date();
         Date expiration = new Date(System.currentTimeMillis() + (60000L * tokenValidTime));
-        SecretKey key = Keys.hmacShaKeyFor(Base64.getEncoder().encode(secretKey.getBytes()));
+        SecretKey key = Keys.hmacShaKeyFor(Base64.getEncoder().encode(SECRET_KEY.getBytes()));
 
         return Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
@@ -36,7 +36,7 @@ public class JwtProvider {
     public static Claims parseJwtToken(String token) {
         token = bearerRemove(token);
         return Jwts.parserBuilder()
-                .setSigningKey(Base64.getEncoder().encodeToString(secretKey.getBytes()))
+                .setSigningKey(Base64.getEncoder().encodeToString(SECRET_KEY.getBytes()))
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
