@@ -6,11 +6,8 @@ import com.koc.user.application.port.in.LoginUseCase;
 import com.koc.user.domain.token.TokenDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.URISyntaxException;
 
 @Slf4j
 @RestController

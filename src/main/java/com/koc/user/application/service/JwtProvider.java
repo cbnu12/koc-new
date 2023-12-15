@@ -15,7 +15,7 @@ import java.util.Date;
 @UtilityClass
 public class JwtProvider {
 
-    private static String secretKey = "testPassword";
+    private static final String secretKey = "testPassword";
 
     public static String createToken(String subject, int tokenValidTime) {
         Date now = new Date();
