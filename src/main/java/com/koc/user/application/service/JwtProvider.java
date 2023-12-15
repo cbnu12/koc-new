@@ -5,8 +5,10 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import lombok.experimental.UtilityClass;
 
+import javax.crypto.SecretKey;
 import java.util.Base64;
 import java.util.Date;
 
@@ -18,6 +20,7 @@ public class JwtProvider {
     public static String createToken(String subject, int tokenValidTime) {
         Date now = new Date();
         Date expiration = new Date(System.currentTimeMillis() + (60000L * tokenValidTime));
+        SecretKey key = Keys.hmacShaKeyFor(Base64.getEncoder().encode(secretKey.getBytes()));
 
         return Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
@@ -25,15 +28,16 @@ public class JwtProvider {
                 .setIssuedAt(now)
                 .setExpiration(expiration)
                 .setSubject(subject)
-                .signWith(SignatureAlgorithm.HS256, Base64.getEncoder().encodeToString(secretKey.getBytes()))
+                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 
 
     public static Claims parseJwtToken(String token) {
         token = bearerRemove(token);
-        return Jwts.parser()
+        return Jwts.parserBuilder()
                 .setSigningKey(Base64.getEncoder().encodeToString(secretKey.getBytes()))
+                .build()
                 .parseClaimsJws(token)
                 .getBody();
     }

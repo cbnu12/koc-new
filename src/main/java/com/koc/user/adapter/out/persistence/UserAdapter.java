@@ -16,8 +16,8 @@ public class UserAdapter implements SaveUserPort, LoadUserPort, LoadUserByKakaoI
     private final UserRepository userRepository;
 
     @Override
-    public Optional<UserDto> loadByKakaoId(Long Id) {
-        Optional<UserEntity> entity = userRepository.findByKakaoId(Id);
+    public Optional<UserDto> loadByKakaoId(Long id) {
+        Optional<UserEntity> entity = userRepository.findByKakaoId(id);
         return entity.map(userEntity -> userEntity.toUser().toDto());
     }
 

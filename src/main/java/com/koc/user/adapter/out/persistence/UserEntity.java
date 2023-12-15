@@ -2,7 +2,6 @@ package com.koc.user.adapter.out.persistence;
 
 import com.koc.user.domain.user.LoginType;
 import com.koc.user.domain.user.UserStatus;
-import com.koc.user.domain.user.KakaoUser;
 import com.koc.user.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
