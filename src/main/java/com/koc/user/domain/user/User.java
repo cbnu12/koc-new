@@ -1,15 +1,10 @@
 package com.koc.user.domain.user;
 
-import com.koc.user.adapter.out.persistence.UserEntity;
+import com.koc.user.domain.vo.Email;
 import com.koc.user.domain.vo.LoginType;
 import com.koc.user.domain.vo.Password;
 import com.koc.user.domain.vo.UserStatus;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.RequiredArgsConstructor;
 
-@Builder
-@AllArgsConstructor
 public class User {
     private Long id;
     private String kocId;
@@ -18,7 +13,7 @@ public class User {
     private Long kakaoUserId;
     private LoginType loginType;
     private UserStatus userStatus;
-    private String email;
+    private Email email;
 
     public User(Long id, String kocId, String password, String refreshToken, Long kakaoUserId, LoginType loginType,
                 UserStatus userStatus, String email) {
@@ -29,7 +24,7 @@ public class User {
         this.kakaoUserId = kakaoUserId;
         this.loginType = loginType;
         this.userStatus = userStatus;
-        this.email = email;
+        this.email = new Email(email);
     }
 
     public void withdraw() {
@@ -43,7 +38,7 @@ public class User {
                 .kocId(kocId)
                 .pw(password.value())
                 .kakaoId(kakaoUserId)
-                .email(email)
+                .email(email.value())
                 .loginType(loginType)
                 .userStatus(userStatus)
                 .build();

@@ -3,7 +3,6 @@ package com.koc.user.adapter.out.persistence;
 import com.koc.user.application.port.out.LoadUserByKakaoId;
 import com.koc.user.application.port.out.LoadUserPort;
 import com.koc.user.application.port.out.SaveUserPort;
-import com.koc.user.domain.user.User;
 import com.koc.user.domain.user.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
