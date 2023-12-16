@@ -1,7 +1,8 @@
 package com.koc.user.adapter.out.persistence;
 
-import com.koc.user.domain.user.LoginType;
-import com.koc.user.domain.user.UserStatus;
+import com.koc.user.domain.user.UserDto;
+import com.koc.user.domain.vo.LoginType;
+import com.koc.user.domain.vo.UserStatus;
 import com.koc.user.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,13 +31,13 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     private UserStatus userStatus;
 
-    public User toUser() {
-        return User.builder()
+    public UserDto toDto() {
+        return UserDto.builder()
                 .id(id)
                 .kocId(kocId)
                 .pw(pw)
                 .refreshToken(refreshToken)
-                .kakaoUserId(kakaoId)
+                .kakaoId(kakaoId)
                 .email(email)
                 .loginType(loginType)
                 .userStatus(userStatus)

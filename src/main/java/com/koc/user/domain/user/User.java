@@ -1,48 +1,39 @@
 package com.koc.user.domain.user;
 
 import com.koc.user.adapter.out.persistence.UserEntity;
+import com.koc.user.domain.vo.LoginType;
+import com.koc.user.domain.vo.Password;
+import com.koc.user.domain.vo.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 
 @Builder
 @AllArgsConstructor
-@RequiredArgsConstructor
 public class User {
     private Long id;
     private String kocId;
-    private String pw;
+    private Password password;
     private String refreshToken;
     private Long kakaoUserId;
     private LoginType loginType;
     private UserStatus userStatus;
     private String email;
 
-
-    public LoginType isKakaoLogin() {
-        return LoginType.KAKAO;
-    }
-
-    public boolean isNomalUser() {
-        return this.userStatus == UserStatus.ACTIVE;
+    public User(Long id, String kocId, String password, String refreshToken, Long kakaoUserId, LoginType loginType,
+                UserStatus userStatus, String email) {
+        this.id = id;
+        this.kocId = kocId;
+        this.password = new Password(password);
+        this.refreshToken = refreshToken;
+        this.kakaoUserId = kakaoUserId;
+        this.loginType = loginType;
+        this.userStatus = userStatus;
+        this.email = email;
     }
 
     public void withdraw() {
         this.userStatus = UserStatus.INACTIVE;
-    }
-
-
-    public UserEntity toEntity() {
-        return UserEntity.builder()
-                .id(id)
-                .kocId(kocId)
-                .pw(pw)
-                .refreshToken(refreshToken)
-                .kakaoId(kakaoUserId)
-                .email(email)
-                .loginType(loginType)
-                .userStatus(userStatus)
-                .build();
     }
 
     public UserDto toDto() {
@@ -50,7 +41,7 @@ public class User {
                 .builder()
                 .id(id)
                 .kocId(kocId)
-                .pw(pw)
+                .pw(password.value())
                 .kakaoId(kakaoUserId)
                 .email(email)
                 .loginType(loginType)
