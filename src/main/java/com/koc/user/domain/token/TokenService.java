@@ -8,6 +8,6 @@ public class TokenService {
     public TokenDto updateRefreshToken(TokenDto dto, String refreshToken) {
         var token = new UserToken(dto.id(), dto.refreshToken(), dto.key());
         token.updateRefreshToken(refreshToken);
-        return new TokenDto(token.getId(), token.getRefreshToken(), null, token.getEmail());
+        return new TokenDto(token.getId().value(), token.getRefreshToken().value(), null, token.getEmail().value());
     }
 }

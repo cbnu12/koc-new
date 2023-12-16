@@ -1,5 +1,8 @@
 package com.koc.user.domain.token;
 
+import com.koc.user.domain.vo.Email;
+import com.koc.user.domain.vo.Id;
+import com.koc.user.domain.vo.RefreshToken;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,11 +11,17 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class UserToken {
-    private Long id;
-    private String email;
-    private String refreshToken;
+    private Id id;
+    private Email email;
+    private RefreshToken refreshToken;
 
     public void updateRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
+        this.refreshToken = new RefreshToken(refreshToken);
+    }
+
+    public UserToken(Long id, String email, String refreshToken) {
+        this.id = new Id(id);
+        this.email = new Email(email);
+        this.refreshToken = new RefreshToken(refreshToken);
     }
 }

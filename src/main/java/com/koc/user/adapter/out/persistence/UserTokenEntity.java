@@ -1,6 +1,5 @@
 package com.koc.user.adapter.out.persistence;
 
-import com.koc.user.domain.token.UserToken;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,12 +20,4 @@ public class UserTokenEntity {
     private Long id;
     private String email;
     private String refreshToken;
-
-    public UserToken toUserToken() {
-        return UserToken.builder()
-                .id(id)
-                .email(email)
-                .refreshToken(refreshToken)
-                .build();
-    }
 }
