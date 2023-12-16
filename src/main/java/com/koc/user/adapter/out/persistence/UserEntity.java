@@ -28,7 +28,7 @@ public class UserEntity {
         return UserDto.builder()
                 .id(id)
                 .kocId(kocId)
-                .pw(pw)
+                .password(pw)
                 .refreshToken(refreshToken)
                 .email(email)
                 .userStatus(userStatus)

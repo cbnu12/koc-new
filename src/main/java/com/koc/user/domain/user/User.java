@@ -28,7 +28,7 @@ public class User {
                 .builder()
                 .id(id.value())
                 .kocId(kocId.value())
-                .pw(password.value())
+                .password(password.value())
                 .email(email.value())
                 .userStatus(userStatus)
                 .build();

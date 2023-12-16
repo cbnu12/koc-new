@@ -25,7 +25,7 @@ public class UserAdapter implements SaveUserPort, LoadUserPort {
                 .email(dto.getEmail())
                 .userStatus(dto.getUserStatus())
                 .kocId(dto.getKocId())
-                .pw(dto.getPw())
+                .pw(dto.getPassword())
                 .refreshToken(dto.getRefreshToken())
                 .build();
         userRepository.save(entity);

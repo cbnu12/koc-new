@@ -1,5 +1,7 @@
 package com.koc.user.adapter.in.rest;
 
+import com.koc.common.exception.PasswordNotMatchException;
+import com.koc.common.exception.UserNotFoundException;
 import com.koc.user.application.port.in.CheckAccessTokenUseCase;
 import com.koc.user.application.port.in.LoginUseCase;
 import com.koc.user.domain.token.TokenDto;
@@ -16,11 +18,13 @@ public class AuthController {
     private final LoginUseCase loginUseCase;
     private final CheckAccessTokenUseCase checkAccessTokenUseCase;
 
-    @GetMapping("/login")
-    public ResponseEntity<TokenResponse> login(@RequestParam String code) {
+    @PostMapping("/login")
+    public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest request) {
         try {
-            TokenDto result = loginUseCase.login(code);
+            TokenDto result = loginUseCase.login(request.email(), request.password());
             return ResponseEntity.ok(TokenResponse.of(result.refreshToken(), result.accessToken(), result.key()));
+        } catch (PasswordNotMatchException | UserNotFoundException e){
+            return ResponseEntity.badRequest().build();
         } catch (Exception e) {
             log.error(e.getMessage());
             return ResponseEntity.internalServerError().build();
