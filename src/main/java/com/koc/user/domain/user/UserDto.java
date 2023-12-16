@@ -12,9 +12,8 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 public class UserDto {
     private Long id;
-    private String kocId;
+    private String email;
     private String password;
     private String refreshToken;
-    private String email;
     private UserStatus userStatus;
 }

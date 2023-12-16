@@ -17,7 +17,6 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    private String kocId;
     private String pw;
     private String refreshToken;
     private String email;
@@ -27,7 +26,6 @@ public class UserEntity {
     public UserDto toDto() {
         return UserDto.builder()
                 .id(id)
-                .kocId(kocId)
                 .password(pw)
                 .refreshToken(refreshToken)
                 .email(email)

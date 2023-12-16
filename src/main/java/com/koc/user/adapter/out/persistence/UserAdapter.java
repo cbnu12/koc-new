@@ -24,7 +24,6 @@ public class UserAdapter implements SaveUserPort, LoadUserPort {
                 .id(dto.getId())
                 .email(dto.getEmail())
                 .userStatus(dto.getUserStatus())
-                .kocId(dto.getKocId())
                 .pw(dto.getPassword())
                 .refreshToken(dto.getRefreshToken())
                 .build();
