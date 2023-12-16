@@ -1,6 +1,5 @@
 package com.koc.user.domain.user;
 
-import com.koc.user.domain.vo.LoginType;
 import com.koc.user.domain.vo.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,8 +15,6 @@ public class UserDto {
     private String kocId;
     private String pw;
     private String refreshToken;
-    private Long kakaoId;
     private String email;
-    private LoginType loginType;
     private UserStatus userStatus;
 }

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
     public UserDto withdraw(UserDto userDto) {
         var user = new User(userDto.getId(), userDto.getKocId(), userDto.getPw(), userDto.getRefreshToken()
-                , userDto.getKakaoId(), userDto.getLoginType(), userDto.getUserStatus(), userDto.getEmail());
+                , userDto.getUserStatus(), userDto.getEmail());
         user.withdraw();
         return user.toDto();
     }

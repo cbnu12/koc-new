@@ -1,15 +1,11 @@
 package com.koc.user.adapter.out.persistence;
 
 import com.koc.user.domain.user.UserDto;
-import com.koc.user.domain.vo.LoginType;
 import com.koc.user.domain.vo.UserStatus;
-import com.koc.user.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
-
-
 
 @Entity
 @Builder
@@ -24,10 +20,7 @@ public class UserEntity {
     private String kocId;
     private String pw;
     private String refreshToken;
-    private Long kakaoId;
     private String email;
-    @Enumerated(EnumType.STRING)
-    private LoginType loginType;
     @Enumerated(EnumType.STRING)
     private UserStatus userStatus;
 
@@ -37,9 +30,7 @@ public class UserEntity {
                 .kocId(kocId)
                 .pw(pw)
                 .refreshToken(refreshToken)
-                .kakaoId(kakaoId)
                 .email(email)
-                .loginType(loginType)
                 .userStatus(userStatus)
                 .build();
     }

@@ -1,7 +1,6 @@
 package com.koc.user.adapter.in.rest;
 
 import com.koc.user.application.port.in.CheckAccessTokenUseCase;
-import com.koc.user.application.port.in.GetKakaoLoginUrlUseCase;
 import com.koc.user.application.port.in.LoginUseCase;
 import com.koc.user.domain.token.TokenDto;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     private final LoginUseCase loginUseCase;
     private final CheckAccessTokenUseCase checkAccessTokenUseCase;
-    private final GetKakaoLoginUrlUseCase getKakaoLoginUrlUseCase;
 
     @GetMapping("/login")
     public ResponseEntity<TokenResponse> login(@RequestParam String code) {
@@ -33,11 +31,6 @@ public class AuthController {
     public TokenCheckResponse checkToken(@RequestHeader(value = "Authorization") String token, @RequestParam String email) {
         var result = checkAccessTokenUseCase.check(token, email);
         return TokenCheckResponse.of(result.accessToken());
-    }
-
-    @GetMapping("/kakao-login-url")
-    public String kakaoLogin() {
-        return getKakaoLoginUrlUseCase.getUrl();
     }
 
 }
