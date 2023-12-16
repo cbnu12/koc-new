@@ -1,4 +1,4 @@
-package com.koc.user.domain.user;
+package com.koc.user.domain.vo;
 
 public enum UserStatus {
     ACTIVE, INACTIVE
