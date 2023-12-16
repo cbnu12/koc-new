@@ -20,6 +20,4 @@ public class UserDto {
     private String email;
     private LoginType loginType;
     private UserStatus userStatus;
-
-
 }
