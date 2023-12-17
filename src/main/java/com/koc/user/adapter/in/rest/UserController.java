@@ -19,7 +19,7 @@ public class UserController {
     private final WithdrawUseCase withdrawUseCase;
 
     @PostMapping
-    public void signUp(SignUpRequest request) {
+    public void signUp(@RequestBody SignUpRequest request) {
         try {
             signUpUseCase.signUp(request.email(), request.password());
         } catch (ValidationException e) {
