@@ -1,6 +1,7 @@
 package com.koc.user.application.service;
 
 import com.koc.user.application.port.in.GetUserUseCase;
+import com.koc.user.application.port.in.SignUpUseCase;
 import com.koc.user.application.port.in.WithdrawUseCase;
 import com.koc.user.application.port.out.LoadUserPort;
 import com.koc.user.application.port.out.SaveUserPort;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserManageService implements GetUserUseCase, WithdrawUseCase {
+public class UserManageService implements GetUserUseCase, WithdrawUseCase, SignUpUseCase {
     private final UserService userService;
     private final SaveUserPort saveUserPort;
     private final LoadUserPort loadUserPort;
@@ -28,5 +29,11 @@ public class UserManageService implements GetUserUseCase, WithdrawUseCase {
     @Override
     public UserDto getUser(Long id) {
         return loadUserPort.load(id).orElseThrow(() -> new IllegalArgumentException("없는 사용자"));
+    }
+
+    @Override
+    public void signUp(String email, String password) {
+        var userDto = userService.create(email, password);
+        saveUserPort.save(userDto);
     }
 }

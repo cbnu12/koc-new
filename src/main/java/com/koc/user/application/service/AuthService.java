@@ -31,7 +31,7 @@ public class AuthService implements LoginUseCase, CheckAccessTokenUseCase {
         var userDto = loadUserByEmailPort.load(email);
 
         return userDto.map(user -> {
-            if(user.getPassword().equals(password)) {
+            if(user.password().equals(password)) {
                 return createToken(email);
             } else {
                 throw new PasswordNotMatchException();

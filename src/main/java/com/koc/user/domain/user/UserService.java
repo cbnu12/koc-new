@@ -5,9 +5,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
     public UserDto withdraw(UserDto userDto) {
-        var user = new User(userDto.getId(), userDto.getPassword(), userDto.getRefreshToken(), userDto.getUserStatus()
-                , userDto.getEmail());
+        var user = new User(userDto.id(), userDto.email(), userDto.password(), userDto.userStatus());
         user.withdraw();
-        return user.toDto();
+        return UserDto.fromDomain(user);
+    }
+
+    public UserDto create(String email, String password) {
+        return UserDto.fromDomain(User.create(email, password));
     }
 }
