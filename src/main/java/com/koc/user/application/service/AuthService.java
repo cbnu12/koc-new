@@ -22,7 +22,6 @@ public class AuthService implements LoginUseCase, CheckAccessTokenUseCase {
     private final SaveTokenPort saveTokenPort;
     private final TokenService tokenService;
 
-
     private static final int ACCESS_TOKEN_VALID_TIME = 30;
     private static final int REFRESH_TOKEN_VALID_TIME = 300;
 

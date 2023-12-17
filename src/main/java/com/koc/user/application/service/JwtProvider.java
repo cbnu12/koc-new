@@ -32,7 +32,6 @@ public class JwtProvider {
                 .compact();
     }
 
-
     public static Claims parseJwtToken(String token) {
         token = bearerRemove(token);
         return Jwts.parserBuilder()
@@ -41,7 +40,6 @@ public class JwtProvider {
                 .parseClaimsJws(token)
                 .getBody();
     }
-
 
     private static String bearerRemove(String token) {
         return token.substring("Bearer ".length());

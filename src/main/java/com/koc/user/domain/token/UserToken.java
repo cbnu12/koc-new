@@ -3,13 +3,9 @@ package com.koc.user.domain.token;
 import com.koc.user.domain.vo.Email;
 import com.koc.user.domain.vo.Id;
 import com.koc.user.domain.vo.RefreshToken;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-@Builder
-@AllArgsConstructor
 public class UserToken {
     private Id id;
     private Email email;

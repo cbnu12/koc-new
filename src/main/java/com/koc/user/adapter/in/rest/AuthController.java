@@ -7,8 +7,10 @@ import com.koc.user.application.port.in.LoginUseCase;
 import com.koc.user.domain.token.TokenDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @Slf4j
 @RestController
@@ -19,15 +21,15 @@ public class AuthController {
     private final CheckAccessTokenUseCase checkAccessTokenUseCase;
 
     @PostMapping("/login")
-    public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest request) {
+    public TokenResponse login(@RequestBody LoginRequest request) {
         try {
             TokenDto result = loginUseCase.login(request.email(), request.password());
-            return ResponseEntity.ok(TokenResponse.of(result.refreshToken(), result.accessToken(), result.key()));
+            return TokenResponse.of(result.refreshToken(), result.accessToken(), result.key());
         } catch (PasswordNotMatchException | UserNotFoundException e){
-            return ResponseEntity.badRequest().build();
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             log.error(e.getMessage());
-            return ResponseEntity.internalServerError().build();
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
