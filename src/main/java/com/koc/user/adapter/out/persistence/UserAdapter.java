@@ -16,7 +16,7 @@ public class UserAdapter implements SaveUserPort, LoadUserPort, LoadUserByEmailP
 
     @Override
     public Optional<UserDto> load(Long id) {
-        return Optional.empty();
+        return userRepository.findById(id).map(UserDto::fromEntity);
     }
 
     @Override
