@@ -55,6 +55,7 @@ public class AuthService implements LoginUseCase, CheckAccessTokenUseCase {
 
     @Override
     public void check(String accessToken, String email) throws NotFoundException, ExpiredJwtException {
-        JwtProvider.parseJwtToken(accessToken);
+        var claims = JwtProvider.parseJwtToken(accessToken);
+        log.info("claims = {}", claims);
     }
 }
