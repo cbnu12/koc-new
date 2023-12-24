@@ -54,8 +54,7 @@ public class AuthService implements LoginUseCase, CheckAccessTokenUseCase {
     }
 
     @Override
-    public TokenDto check(String accessToken, String email) throws NotFoundException, ExpiredJwtException {
+    public void check(String accessToken, String email) throws NotFoundException, ExpiredJwtException {
         JwtProvider.parseJwtToken(accessToken);
-        return new TokenDto(null, null, accessToken, email);
     }
 }

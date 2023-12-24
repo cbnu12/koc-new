@@ -1,11 +1,9 @@
 package com.koc.user.application.service;
 
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Header;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import lombok.experimental.UtilityClass;
 
 import javax.crypto.SecretKey;
@@ -32,8 +30,9 @@ public class JwtProvider {
                 .compact();
     }
 
-    public static Claims parseJwtToken(String token) {
-        token = bearerRemove(token);
+    public static Claims parseJwtToken(String token) throws ExpiredJwtException, UnsupportedJwtException,
+            MalformedJwtException, SignatureException, IllegalArgumentException{
+        token = removeBearer(token);
         return Jwts.parserBuilder()
                 .setSigningKey(Base64.getEncoder().encodeToString(SECRET_KEY.getBytes()))
                 .build()
@@ -41,7 +40,7 @@ public class JwtProvider {
                 .getBody();
     }
 
-    private static String bearerRemove(String token) {
+    private static String removeBearer(String token) {
         return token.substring("Bearer ".length());
     }
 }
