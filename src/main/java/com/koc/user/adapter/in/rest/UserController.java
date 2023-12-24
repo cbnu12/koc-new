@@ -39,7 +39,7 @@ public class UserController {
         return getUserUseCase.getUser(id);
     }
 
-    @PatchMapping({"id"})
+    @PatchMapping("{id}")
     public void changePassword(@PathVariable("id") Long id,
             @RequestBody ChangePasswordRequest request) {
         changePasswordUseCase.change(id, request.password());
