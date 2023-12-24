@@ -10,8 +10,8 @@ import lombok.Getter;
 
 @Getter
 public class User {
-    private Id id;
-    private Email email;
+    private final Id id;
+    private final Email email;
     private Password password;
     private UserStatus userStatus;
 
@@ -44,5 +44,14 @@ public class User {
 
     public void withdraw() {
         this.userStatus = UserStatus.INACTIVE;
+    }
+
+    public void changePassword(String newPasswordValue) {
+        var newPassword = new Password(newPasswordValue);
+        if(newPassword.validate()) {
+            throw new ValidationException(Password.class.getSimpleName());
+        }
+
+        this.password = newPassword;
     }
 }

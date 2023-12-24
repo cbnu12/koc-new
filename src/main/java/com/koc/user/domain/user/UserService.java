@@ -13,4 +13,10 @@ public class UserService {
     public UserDto create(String email, String password) {
         return UserDto.fromDomain(User.create(email, password));
     }
+
+    public UserDto changePassword(UserDto userDto, String newPassword) {
+        var user = new User(userDto.id(), userDto.email(), userDto.password(), userDto.userStatus());
+        user.changePassword(newPassword);
+        return UserDto.fromDomain(user);
+    }
 }
